@@ -34,6 +34,7 @@ import { rootLoggerServiceFactory } from '@backstage/backend-defaults/rootLogger
 import { schedulerServiceFactory } from '@backstage/backend-defaults/scheduler';
 import { urlReaderServiceFactory } from '@backstage/backend-defaults/urlReader';
 import { userInfoServiceFactory } from '@backstage/backend-defaults/userInfo';
+import { rootMetricsServiceFactory } from '@backstage/backend-defaults/rootMetrics';
 import { eventsServiceFactory } from '@backstage/plugin-events-node';
 import {
   actionsRegistryServiceFactory,
@@ -41,6 +42,9 @@ import {
 } from '@backstage/backend-defaults/alpha';
 
 export const defaultServiceFactories = [
+  ...(process.env.BACKSTAGE_ROOT_METRICS_ENABLED === 'true'
+    ? [rootMetricsServiceFactory]
+    : []),
   auditorServiceFactory,
   authServiceFactory,
   cacheServiceFactory,
